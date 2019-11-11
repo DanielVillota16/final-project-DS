@@ -1,5 +1,7 @@
 package graphs;
 
+import java.util.Comparator;
+
 public class Vertex<T> implements Comparable<Vertex<T>>{
 
 	public static final int WHITE = 0;
@@ -11,11 +13,11 @@ public class Vertex<T> implements Comparable<Vertex<T>>{
 	/**
 	 * Distance or Initial TimeSTamp for DFS
 	 */
-	private double d;
+	private double distance;
 	/**
 	 * Final TimeStamp for DFS
 	 */
-	private int f;
+	private int finalTime;
 	
 	private int index;
 	
@@ -37,20 +39,20 @@ public class Vertex<T> implements Comparable<Vertex<T>>{
 		this.value = value;
 	}
 
-	public double getD() {
-		return d;
+	public double getDistance() {
+		return distance;
 	}
 
-	public void setD(double d) {
-		this.d = d;
+	public void setDistance(double d) {
+		this.distance = d;
 	}
 
-	public int getF() {
-		return f;
+	public int getFinalTime() {
+		return finalTime;
 	}
 
-	public void setF(int f) {
-		this.f = f;
+	public void setFinalTime(int f) {
+		this.finalTime = f;
 	}
 
 	public int getColor() {
@@ -79,7 +81,7 @@ public class Vertex<T> implements Comparable<Vertex<T>>{
 
 	@Override
 	public int compareTo(Vertex<T> vertex) {
-		int comp = Double.compare(d, vertex.d);
+		int comp = Double.compare(distance, vertex.distance);
 		if(value instanceof Comparable) {
 			if(comp == 0) {
 				return ((Comparable) value).compareTo(vertex.getValue());

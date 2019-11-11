@@ -32,22 +32,27 @@ public class AdjListGraph<T> implements IGraph<T> {
 		map = new HashMap<>();
 	}
 
+	@Override
 	public List<Vertex<T>> getVertices() {
 		return vertices;
 	}
 
+	@Override
 	public int getNumberOfVertices() {
 		return numberOfVertices;
 	}
 
+	@Override
 	public int getNumberOfEdges() {
 		return numberOfEdges;
 	}
 
+	@Override
 	public boolean isDirected() {
 		return directed;
 	}
 
+	@Override
 	public boolean isWeighted() {
 		return weighted;
 	}
@@ -70,7 +75,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		addEdge(from, to);
 	}
 
-	public void addEdge(AdjVertex<T> from, AdjVertex<T> to) {
+	private void addEdge(AdjVertex<T> from, AdjVertex<T> to) {
 		addEdge(from, to, 1D);
 	}
 
@@ -83,7 +88,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public void addEdge(AdjVertex<T> from, AdjVertex<T> to, double w) {
+	private void addEdge(AdjVertex<T> from, AdjVertex<T> to, double w) {
 		if (from != null && to != null) {
 			Edge<T> edge = new Edge<T>(from, to, w);
 			from.getAdjList().add(edge);
@@ -95,7 +100,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public void removeVertex(Vertex<T> v) {
+	private void removeVertex(Vertex<T> v) {
 		for (int i = 0; i < vertices.size(); i++) {
 			removeEdge(vertices.get(i), v);
 			if (isDirected()) {
@@ -107,13 +112,14 @@ public class AdjListGraph<T> implements IGraph<T> {
 		numberOfVertices--;
 	}
 
+	@Override
 	public void removeVertex(T v) {
 		if (isInGraph(v)) {
 			removeVertex(searchVertex(v));
 		}
 	}
 
-	public void removeEdge(Vertex<T> x, Vertex<T> y) {
+	private void removeEdge(Vertex<T> x, Vertex<T> y) {
 		AdjVertex<T> from = (AdjVertex<T>) x;
 		AdjVertex<T> to = (AdjVertex<T>) y;
 		List<Edge<T>> adjFrom = from.getAdjList();
@@ -131,12 +137,14 @@ public class AdjListGraph<T> implements IGraph<T> {
 		numberOfEdges--;
 	}
 
+	@Override
 	public void removeEdge(T x, T y) {
 		if (isInGraph(x) && isInGraph(y)) {
 			removeEdge(searchVertex(x), searchVertex(y));
 		}
 	}
 
+	@Override
 	public List<Vertex<T>> getNeighbors(Vertex<T> x) {
 		List<Vertex<T>> neigh = new ArrayList<>();
 		AdjVertex<T> from = (AdjVertex<T>) x;
@@ -147,14 +155,17 @@ public class AdjListGraph<T> implements IGraph<T> {
 		return neigh;
 	}
 
+	@Override
 	public boolean areAdjacent(Vertex<T> x, Vertex<T> y) {
 		return getNeighbors(x).contains(y);
 	}
 
+	@Override
 	public boolean isInGraph(T value) {
 		return searchVertex(value) != null;
 	}
 
+	@Override
 	public double getEdgeWeight(Vertex<T> x, Vertex<T> y) {
 		double w = 0;
 		if (isInGraph(x.getValue()) && isInGraph(y.getValue())) {
@@ -167,6 +178,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		return w;
 	}
 
+	@Override
 	public void setEdgeWeight(Vertex<T> x, Vertex<T> y, double w) {
 		if (isInGraph(x.getValue()) && isInGraph(y.getValue()) && weighted) {
 			AdjVertex<T> from = (AdjVertex<T>) x;
@@ -183,9 +195,11 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	@Override
 	public AdjVertex<T> searchVertex(T value) {
 		return map.get(value);
 	}
+
 
 	public int getIndexOf(Vertex<T> v) {
 		int index = -1;
@@ -199,15 +213,16 @@ public class AdjListGraph<T> implements IGraph<T> {
 		return index;
 	}
 
+	@Override
 	public void bfs(Vertex<T> x) {
 		AdjVertex<T> s = (AdjVertex<T>) x;
 		for (Vertex<T> u : vertices) {
 			u.setColor(Vertex.WHITE);
-			u.setD(INF);
+			u.setDistance(INF);
 			u.setPred(null);
 		}
 		s.setColor(Vertex.GRAY);
-		s.setD(0);
+		s.setDistance(0);
 		s.setPred(null);
 		Queue<AdjVertex<T>> q = new LinkedList<>();
 		q.offer(s);
@@ -217,7 +232,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 				AdjVertex<T> v = (AdjVertex<T>) u.getAdjList().get(i).getDestination();
 				if (v.getColor() == Vertex.WHITE) {
 					v.setColor(Vertex.GRAY);
-					v.setD(u.getD() + 1);
+					v.setDistance(u.getDistance() + 1);
 					v.setPred(u);
 					q.offer(v);
 				}
@@ -226,6 +241,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	@Override
 	public void dfs() {
 		for (Vertex<T> u : vertices) {
 			u.setColor(Vertex.WHITE);
@@ -241,7 +257,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 	private int dfsVisit(AdjVertex<T> u, int time) {
 		//AQUI DEBERIA IR EL LLAMADO AL METODO DE ORDENAMIENTO
 		time++;
-		u.setD(time);
+		u.setDistance(time);
 		u.setColor(Vertex.GRAY);
 		for (int i = 0; i < u.getAdjList().size(); i++) {
 			AdjVertex<T> v = (AdjVertex<T>) u.getAdjList().get(i).getDestination();
@@ -252,7 +268,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 		u.setColor(Vertex.BLACK);
 		time++;
-		u.setF(time);
+		u.setFinalTime(time);
 		return time;
 	}
 
@@ -308,12 +324,13 @@ public class AdjListGraph<T> implements IGraph<T> {
 
 	private void initSingleSource(AdjVertex<T> s) {
 		for (Vertex<T> u : vertices) {
-			u.setD(INF);
+			u.setDistance(INF);
 			u.setPred(null);
 		}
-		s.setD(0);
+		s.setDistance(0);
 	}
 
+	@Override
 	public void dijkstra(Vertex<T> x) {
 		AdjVertex<T> s = (AdjVertex<T>) x;
 		initSingleSource(s);
@@ -325,10 +342,10 @@ public class AdjListGraph<T> implements IGraph<T> {
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
 				double weight = e.getWeight();
 				// relax(u,v,weight)
-				double distanceFromU = u.getD() + weight;
-				if (distanceFromU < v.getD()) {
+				double distanceFromU = u.getDistance() + weight;
+				if (distanceFromU < v.getDistance()) {
 					queue.remove(v);
-					v.setD(distanceFromU);
+					v.setDistance(distanceFromU);
 					v.setPred(u);
 					queue.add(v);
 				}
@@ -348,10 +365,10 @@ public class AdjListGraph<T> implements IGraph<T> {
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
 				double weight = e.getWeight();
 				// relax(u,v,weight)
-				double distanceFromU = u.getD() + weight;
-				if (distanceFromU < v.getD()) {
+				double distanceFromU = u.getDistance() + weight;
+				if (distanceFromU < v.getDistance()) {
 					queue.remove(v);
-					v.setD(distanceFromU);
+					v.setDistance(distanceFromU);
 					v.setPred(u);
 					queue.add(v);
 				}
@@ -359,6 +376,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
+	@Override
 	public double[][] floydwarshall() {
 		double[][] weights = getWeightsMatrix();
 		for (int k = 0; k < vertices.size(); k++) {
@@ -388,13 +406,14 @@ public class AdjListGraph<T> implements IGraph<T> {
 		return weights;
 	}
 
+	@Override
 	public void prim(Vertex<T> s) {
 		AdjVertex<T> r = (AdjVertex<T>) s;
 		for (Vertex<T> u : vertices) {
-			u.setD(INF);
+			u.setDistance(INF);
 			u.setColor(Vertex.WHITE);
 		}
-		r.setD(0);
+		r.setDistance(0);
 		r.setPred(null);
 		PriorityQueue<AdjVertex<T>> queue = new PriorityQueue<>();
 		for (Vertex<T> u : vertices) {
@@ -404,9 +423,9 @@ public class AdjListGraph<T> implements IGraph<T> {
 			AdjVertex<T> u = queue.poll();
 			for (Edge<T> e : u.getAdjList()) {
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
-				if (v.getColor() == Vertex.WHITE && e.getWeight() < v.getD()) {
+				if (v.getColor() == Vertex.WHITE && e.getWeight() < v.getDistance()) {
 					queue.remove(v);
-					v.setD(e.getWeight());
+					v.setDistance(e.getWeight());
 					queue.add(v);
 					v.setPred(u);
 				}
@@ -415,14 +434,15 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public ArrayList<Edge<T>> kruskal() { // Adapted from
+	@Override
+	public List<Edge<T>> kruskal() { // Adapted from
 											// www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 		
-		ArrayList<Edge<T>> result = new ArrayList<>(); // This will store the resultant MST
+		List<Edge<T>> result = new ArrayList<>(); // This will store the resultant MST
 		int e = 0; // An index variable, used for result[]
 		int i = 0; // An index variable, used for sorted edges
 
-		ArrayList<Edge<T>> edges = getEdges();
+		List<Edge<T>> edges = getEdges();
 
 		// Step 1: Sort all the edges in non-decreasing order of their
 		// weight. If we are not allowed to change the given graph, we
@@ -456,8 +476,9 @@ public class AdjListGraph<T> implements IGraph<T> {
 		return result;
 	}
 
-	public ArrayList<Edge<T>> getEdges() {
-		ArrayList<Edge<T>> edges = new ArrayList<>();
+	@Override
+	public List<Edge<T>> getEdges() {
+		List<Edge<T>> edges = new ArrayList<>();
 		for (int i = 0; i < vertices.size(); i++) {
 			AdjVertex<T> v = (AdjVertex<T>) vertices.get(i);
 			for (int j = 0; j < v.getAdjList().size(); j++) {
@@ -467,6 +488,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		return edges;
 	}
 	
+	@Override
 	public List<T> getContents(){
 		List<Vertex<T>> vertices= getVertices();
 		List<T> contents=new ArrayList<>();

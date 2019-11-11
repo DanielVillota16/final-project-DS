@@ -1,5 +1,7 @@
 package graphs;
 
+import java.util.Comparator;
+
 public class Edge<T> implements Comparable<Edge<T>>{
 
 	private double weight;

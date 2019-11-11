@@ -127,9 +127,9 @@ public interface IGraph<T> {
 	public void prim(Vertex<T> s);
 	/**
 	 * This method finds one path the connects all vertices with the least weight path.
-	 * @return Returns an ArrayList containing the edges needed to complete the shortest weight path.
+	 * @return Returns an List containing the edges needed to complete the shortest weight path.
 	 */
-	public ArrayList<Edge<T>> kruskal();
+	public List<Edge<T>> kruskal();
 	/**
 	 * This method searches a vertex based on the value it receives.
 	 * @param value Is the T value that the method receives. value!=null.
