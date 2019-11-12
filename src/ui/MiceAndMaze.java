@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import model.GraphAdjList;
+import graphs.*;
 
 public class MiceAndMaze {
 	
@@ -19,7 +19,7 @@ public class MiceAndMaze {
 				e = Integer.parseInt(br.readLine()),
 				t = Integer.parseInt(br.readLine()),
 				m = Integer.parseInt(br.readLine());
-			GraphAdjList<Integer> maze = new GraphAdjList<Integer>();
+			AdjListGraph<Integer> maze = new AdjListGraph<Integer>(true, true);
 			for (int j = 1; j <= n; j++) {
 				maze.addVertex(j);
 			}
@@ -28,12 +28,12 @@ public class MiceAndMaze {
 				int a = Integer.parseInt(mLine[0]),
 					b = Integer.parseInt(mLine[1]),
 					w = Integer.parseInt(mLine[2]);
-				maze.addEdge(a, b, w, "", false);
+				maze.addEdge(a, b, w);
 			}
 			for (int j = 1; j <= n; j++) {
-				if(maze.dijkstraDistances(j, e) <= t) {
-					success++;
-				}
+				//if(maze.dijkstraDistances(j, e) <= t) {
+				//	success++;
+				//}
 			}
 			successForCases[i] = success;
 		}
