@@ -96,6 +96,32 @@ public class GraphAdjList<T extends Comparable<T>> implements Graph<T> {
 		return maps;
 	}
 	
+	public int dijkstraDistances(T source, T dest) {
+		Hashtable<T, Integer> distances = new Hashtable<>();
+		distances.put(source, 0);
+		PriorityQueue<Pair<T, Integer>> q = new PriorityQueue<>();
+		for(T vertex : graph.keySet()) {
+			if(!vertex.equals(source)) {
+				distances.put(vertex, Integer.MAX_VALUE);
+			}
+			q.offer(new Pair<T,Integer>(vertex,distances.get(vertex),Pair.COMPARE_BY_SECOND));
+		}
+		T u = null;
+		while(!q.isEmpty()) {
+			u = q.poll().getP1();
+			if(u.compareTo(dest) == 0) break;
+			for(T neighbor : neighbors(u)) {
+				int alt = distances.get(u) + lengthUV(u, neighbor);
+				if(alt < distances.get(neighbor)) {
+					distances.put(neighbor,alt);
+					q.remove(neighbor);
+					q.offer(new Pair<T,Integer>(neighbor,alt,Pair.COMPARE_BY_SECOND));
+				}
+			}
+		}
+		return distances.get(dest);
+	}
+	
 	public int lengthUV(T u, T v) {
 		if(graph.containsKey(u) && graph.get(u).containsKey(v)) {
 			return graph.get(u).get(v).getWeight();
