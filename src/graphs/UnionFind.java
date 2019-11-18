@@ -1,14 +1,5 @@
 package graphs;
 
-// simple union-find based on int[] arrays
-// for  "parent" and "rank"
-// implements the "disjoint-set forests" described at
-// http://en.wikipedia.org/wiki/Disjoint-set_data_structure
-// which have almost constant "amortized" cost per operation
-// (actually O(inverse Ackermann))
-
-//Source: https://www.cs.waikato.ac.nz/~bernhard/317/source/graph/UnionFind.java
-
 import java.util.*;
 
 public class UnionFind {

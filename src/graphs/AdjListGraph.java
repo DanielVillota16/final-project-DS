@@ -8,11 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
-/**
- * 
- * @author 
- * @param <T>
- */
+
 public class AdjListGraph<T> implements IGraph<T> {
 
 	private boolean directed;
@@ -247,7 +243,6 @@ public class AdjListGraph<T> implements IGraph<T> {
 	}
 
 	private int dfsVisit(AdjVertex<T> u, int time) {
-		//AQUI DEBERIA IR EL LLAMADO AL METODO DE ORDENAMIENTO
 		time++;
 		u.setD(time);
 		u.setColor(Vertex.GRAY);
@@ -263,56 +258,6 @@ public class AdjListGraph<T> implements IGraph<T> {
 		u.setF(time);
 		return time;
 	}
-
-	// public double[] dijkstra(AdjVertex<T> vertex) {
-	// // Initialization
-	// double[] dist = new double[numberOfVertices];
-	// boolean[] visit = new boolean[numberOfVertices];
-	// PriorityQueue<AdjVertex<T>> s = new PriorityQueue<>();
-	//
-	// int index = vertex.getIndex();
-	//
-	// for (int i = 0; i < visit.length; i++)
-	// visit[i] = false;
-	//
-	// for (int i = 0; i < dist.length; i++)
-	// dist[i] = Integer.MAX_VALUE;
-	//
-	// dist[index] = 0;
-	//
-	// vertex.setD(0);
-	//
-	// s.add(vertex);
-	//
-	// // Dijkstra Algorithm
-	//
-	// while (!s.isEmpty()) {
-	// AdjVertex<T> p = s.poll();
-	// // Index of the vertex
-	// int x = p.getIndex();
-	// // Update visit array
-	// visit[x] = true;
-	//
-	// // Looks for a better path throughout adjacent list
-	// for (int i = 0; i < p.getAdjList().size(); i++) {
-	//
-	// // Look at the weights from p to the adjVertex
-	// Edge<T> adjVertex = p.getAdjList().get(i);
-	// int e = adjVertex.getDestination().getIndex();
-	// double w = adjVertex.getWeight();
-	//
-	// if (dist[x] + w < dist[e]) {
-	// dist[e] = dist[x] + w;
-	// AdjVertex<T> toAdd = new AdjVertex<T>(adjVertex.getDestination().getValue());
-	// toAdd.setIndex(e);
-	// toAdd.setD(dist[e]);
-	// s.add(toAdd);
-	// }
-	// }
-	// }
-	//
-	// return dist;
-	// }
 
 	private void initSingleSource(AdjVertex<T> s) {
 		for (Vertex<T> u : vertices) {
@@ -332,7 +277,6 @@ public class AdjListGraph<T> implements IGraph<T> {
 			for (Edge<T> e : u.getAdjList()) {
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
 				double weight = e.getWeight();
-				// relax(u,v,weight)
 				double distanceFromU = u.getD() + weight;
 				if (distanceFromU < v.getD()) {
 					queue.remove(v);
@@ -355,7 +299,6 @@ public class AdjListGraph<T> implements IGraph<T> {
 			for (Edge<T> e : u.getAdjList()) {
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
 				double weight = e.getWeight();
-				// relax(u,v,weight)
 				double distanceFromU = u.getD() + weight;
 				if (distanceFromU < v.getD()) {
 					queue.remove(v);
@@ -424,43 +367,26 @@ public class AdjListGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public ArrayList<Edge<T>> kruskal() { // Adapted from
-											// www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
-		
-		ArrayList<Edge<T>> result = new ArrayList<>(); // This will store the resultant MST
-		int e = 0; // An index variable, used for result[]
-		int i = 0; // An index variable, used for sorted edges
-
+	public ArrayList<Edge<T>> kruskal() {	
+		ArrayList<Edge<T>> result = new ArrayList<>();
+		int e = 0;
+		int i = 0;
 		ArrayList<Edge<T>> edges = getEdges();
-
-		// Step 1: Sort all the edges in non-decreasing order of their
-		// weight. If we are not allowed to change the given graph, we
-		// can create a copy of array of edges
 		Collections.sort(edges);
-
 		UnionFind uf = new UnionFind(vertices.size());
-
-		i = 0; // Index used to pick next edge
-
-		// Number of edges to be taken is equal to V-1
+		i = 0;
 		while (e < vertices.size() - 1 && i < edges.size()) {
-			// Step 2: Pick the smallest edge. And increment
-			// the index for next iteration
 			Edge<T> edge = edges.get(i);
 			i++;
 
 			int x = uf.find(getIndexOf(edge.getSource()));
 			int y = uf.find(getIndexOf(edge.getDestination()));
-
-			// If including this edge does't cause cycle,
-			// include it in result and increment the index
-			// of result for next edge
+			
 			if (x != y) {
 				result.add(edge);
 				e++;
 				uf.union(x, y);
 			}
-			// Else discard the edge
 		}
 		return result;
 	}
