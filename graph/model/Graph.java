@@ -9,8 +9,14 @@ public class Graph {
 	private AdjMatrixGraph<Node> adjMatrix;
 	
 	private int N;
+	
 	private int E;
+	
 	private int T;
+	
+	private int answer;
+	
+	private int totalW;
 	//private int M;
 	
 	public Graph(int n, int e, int t) {
@@ -19,17 +25,33 @@ public class Graph {
 		N = n;
 		E = e;
 		T = t;
+		answer = 0;
+		createCells();
+	}
+	
+	public Graph(int n) {
+		adjList = new AdjListGraph<Node>(false, true);
+		adjMatrix = new AdjMatrixGraph<Node>(false, true);
+		N = n;
+		answer = 0;
 		createVertices();
 	}
 	
-	private void createVertices() {
+	private void createCells() {
 		for (int i = 1 ; i <= N; i++) {
 			Node n = new Node(i);
 			adjList.addVertex(n);
 			adjMatrix.addVertex(n);
 		}
-		adjMatrix.getVertices().get(E).getValue().setType(Node.EXIT);
-		
+		adjMatrix.getVertices().get(E-1).getValue().setType(Node.EXIT);
+	}
+	
+	public void createVertices() {
+		for (int i = 0 ; i < N; i++) {
+			Node n = new Node(i);
+			adjList.addVertex(n);
+			adjMatrix.addVertex(n);
+		}
 	}
 	
 	public AdjListGraph<Node> getAdjList() {
@@ -38,8 +60,15 @@ public class Graph {
 	public AdjMatrixGraph<Node> getAdjMatrix() {
 		return adjMatrix;
 	}
+	public int getAnswer() {
+		return answer;
+	}
 	
-	public int solveMice() {
+	public void setAnswer(int answer) {
+		this.answer += answer;
+	}
+	
+	public void solveMice() {
 		int success = 0;
 		double[][] floyd = adjMatrix.floydwarshall();
 		for (int j = 0; j < floyd.length; j++) {
@@ -48,7 +77,16 @@ public class Graph {
 				success++;
 			}
 		}
-		return success;
+		answer = success;		
+	}
+	
+	public void solveDark() {
+		adjList.prim(adjList.getVertices().get(0));
+		int ans = 0;
+		for(int i = 0; i < adjList.getVertices().size(); ++i) {
+			ans += adjList.getVertices().get(i).getD();
+		}
+		answer = ans-totalW;
 	}
 
 }

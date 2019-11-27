@@ -11,6 +11,9 @@ public class Program {
 		graphs = new ArrayList<Graph>(C);
 	}
 	
+	public Program() {
+		graphs = new ArrayList<Graph>();
+	}
 	
 	public List<Graph> getGraphs() {
 		return graphs;
@@ -20,18 +23,27 @@ public class Program {
 		graphs.add(new Graph(n, e, t));
 	}
 	
-	public void addEdge(int a, int b, int W) {
+	public void addGraph(int n) { 
+		graphs.add(new Graph(n));
+	}
+	
+	public void addEdge(int a, int b, int W, int n) {
 		Graph g = graphs.get(graphs.size()-1);
-		Node A = g.getAdjMatrix().getVertices().get(a-1).getValue();
-		Node B = g.getAdjMatrix().getVertices().get(b-1).getValue();
+		Node A = g.getAdjMatrix().getVertices().get(a-n).getValue();
+		Node B = g.getAdjMatrix().getVertices().get(b-n).getValue();
 		g.getAdjList().addEdge(A, B, W);
 		g.getAdjMatrix().addEdge(A, B, W);
+		g.setAnswer(W);
 	}
 	
-	public int solveMice(int C) {
-		int g = graphs.size()-C;
-		return graphs.get(g).solveMice();
+	public void solveMice() {
+		int g = graphs.size()-1;
+		graphs.get(g).solveMice();
 	}
 	
+	public void solveDark() {
+		int g = graphs.size()-1;
+		graphs.get(g).solveDark();
+	}
 	
 }
