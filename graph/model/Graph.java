@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import graphs.*;
 
 public class Graph {
@@ -54,6 +56,8 @@ public class Graph {
 		}
 	}
 	
+
+	
 	public AdjListGraph<Node> getAdjList() {
 		return adjList;
 	}
@@ -64,8 +68,8 @@ public class Graph {
 		return answer;
 	}
 	
-	public void setAnswer(int answer) {
-		this.answer += answer;
+	public void setTotal(int answer) {
+		this.totalW += answer;
 	}
 	
 	public void solveMice() {
@@ -86,7 +90,15 @@ public class Graph {
 		for(int i = 0; i < adjList.getVertices().size(); ++i) {
 			ans += adjList.getVertices().get(i).getD();
 		}
-		answer = ans-totalW;
+		answer = totalW-ans;
+	}
+
+	public void EdgesTrue() {
+		List<Edge<Node>> list = adjList.getEdges();
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setMarked(true);
+		}
+		
 	}
 
 }

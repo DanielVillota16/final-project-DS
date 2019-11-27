@@ -10,6 +10,7 @@ public class Edge<T> implements Comparable<Edge<T>>{
 
 	public Edge(Vertex<T> source, Vertex<T> destination) {
 		this(source, destination, 1D);
+		this.marked = false;
 	}
 
 	public Edge(Vertex<T> source, Vertex<T> destination, double weight) {
@@ -51,6 +52,8 @@ public class Edge<T> implements Comparable<Edge<T>>{
 
 	public void setMarked(boolean marked) {
 		this.marked = marked;
+		//System.out.println(marked);
+		
 	}
 
 }

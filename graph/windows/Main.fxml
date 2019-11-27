@@ -43,7 +43,7 @@
                                     <Button mnemonicParsing="false" onAction="#readMice" text="Leer Archivo" GridPane.columnIndex="1" />
                                     <Button alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#beforeMice" text="&lt;" GridPane.rowIndex="2" />
                                     <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#afterMice" text="&gt;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#ClearMice" text="Limpiar" GridPane.rowIndex="4" />
+                                    <Button mnemonicParsing="false" onAction="#clearMice" text="Limpiar" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
                            </children>
@@ -82,7 +82,7 @@
                                     <Button mnemonicParsing="false" onAction="#readDark" text="Leer Archivo" GridPane.columnIndex="1" />
                                     <Button mnemonicParsing="false" onAction="#beforeDark" text="&lt;" GridPane.rowIndex="2" />
                                     <Button mnemonicParsing="false" onAction="#afterDark" text="&gt;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#clearDark" text="Button" GridPane.rowIndex="4" />
+                                    <Button mnemonicParsing="false" onAction="#clearDark" text="Limpiar" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
                            </children>

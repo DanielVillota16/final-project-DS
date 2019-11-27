@@ -33,7 +33,10 @@ public class Program {
 		Node B = g.getAdjMatrix().getVertices().get(b-n).getValue();
 		g.getAdjList().addEdge(A, B, W);
 		g.getAdjMatrix().addEdge(A, B, W);
-		g.setAnswer(W);
+		g.setTotal(W);
+		if(n ==1) {
+			g.EdgesTrue();
+		}
 	}
 	
 	public void solveMice() {

@@ -68,14 +68,14 @@ public class MainController {
     }
     
     @FXML
-    void ClearMice(ActionEvent event) {
+    void clearMice(ActionEvent event) {
     	pageMice = 0;
     	programMice = new Program();
     	paneMice.getChildren().clear();
     }
     
     @FXML
-    void ClearDark(ActionEvent event) {
+    void clearDark(ActionEvent event) {
     	pageDark = 0;
     	programDark = new Program();
     	paneDark.getChildren().clear();
@@ -197,7 +197,7 @@ public class MainController {
        		double posX = pos[0];
        		double posY = pos[1];
        		boolean t = pane.contains(posX, posY);
-       		System.out.println(i+" "+posX+" "+posY);
+       		//System.out.println(i+" "+posX+" "+posY);
 			while(!t) {
 				program.getGraphs().get(g).getAdjList().getVertices().get(i).getValue().generatePos();
 				pos = getPos(program, g, i);
@@ -211,10 +211,11 @@ public class MainController {
 			node.setCenterY(posY);
 			node.setRadius(20);
 			int type = program.getGraphs().get(g).getAdjList().getVertices().get(i).getValue().getType();
-			if(type == Node.EXIT) {
-				node.setFill(Color.GREENYELLOW);
-			}else if(type == Node.LEAVE){
+			
+			if(type == Node.LEAVE){
 				node.setFill(Color.YELLOW);
+			}else if(type == Node.EXIT) {
+				node.setFill(Color.GREENYELLOW);
 			}else {
 				node.setFill(Color.LIGHTBLUE);
 			}
@@ -229,26 +230,36 @@ public class MainController {
        	
        	List<Edge<Node>> edges = program.getGraphs().get(g).getAdjList().getEdges();
        	for(int i = 0; i < edges.size(); i++) {
+       		if(edges.get(i).isMarked()) {
        		double startX = edges.get(i).getSource().getValue().getX();
        		double startY = edges.get(i).getSource().getValue().getY();
        		double endX = edges.get(i).getDestination().getValue().getX();
        		double endY = edges.get(i).getDestination().getValue().getY();
        		double weights = edges.get(i).getWeight();
+       		
        		Line line = new Line();
        		line.setStartX(startX);
        		line.setStartY(startY);
        		line.setEndX(endX);
        		line.setEndY(endY);
+       		
+       			line.setFill(Color.LIGHTBLUE);
+                line.setStyle("-fx-Background-color: lightblue;");
+                line.setStyle("-fx-color: lightblue;");
+               line.setStyle("-fx-Foreground-color: lightblue");
+       		System.out.println("sii");
+       		
        		Label text = new Label(weights+"");
        		text.setLayoutX(Math.abs((startX+endX)/2));
        		text.setLayoutY(Math.abs((startY+endY)/2));
        		pane.getChildren().add(line);
        		pane.getChildren().add(text);
+       		}
        	}
        	answer.setText(program.getGraphs().get(g).getAnswer()+"");
-       	pane.getChildren().addAll(list1);
+       	pane.getChildren().add(answer);
+    	pane.getChildren().addAll(list1);
 		pane.getChildren().addAll(list2);
-		pane.getChildren().add(answer);
     }
     
     public double[] getPos(Program program, int p, int i) {
