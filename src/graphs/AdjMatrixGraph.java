@@ -91,7 +91,7 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 		}
 	}
 
-	public void addEdge(Vertex<T> from, Vertex<T> to, double w) {
+	private void addEdge(Vertex<T> from, Vertex<T> to, double w) {
 		if (from != null && to != null) {
 
 			adjMatrix.get(getIndexOf(from)).set(getIndexOf(to), 1);
