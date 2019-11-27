@@ -13,6 +13,7 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 	private List<ArrayList<Integer>> adjMatrix;
 	private List<ArrayList<Double>> weightsMatrix;
 	private HashMap<T, Vertex<T>> map;
+	private boolean[][] marked;
 
 	public AdjMatrixGraph(boolean directed, boolean weighted) {
 		this.directed = directed;
@@ -189,7 +190,7 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 		int index = -1;
 		boolean searching = true;
 		for (int i = 0; i < vertices.size() && searching; i++) {
-			if (vertices.get(i) == v) {
+			if (vertices.get(i).equals(v)) {
 				index = i;
 				searching = false;
 			}
@@ -305,6 +306,9 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 	}
 
 	public void prim(Vertex<T> r) {
+		for (int i = 0; i < marked.length; i++) {
+			Arrays.fill(marked, false);
+		}
 		for (Vertex<T> u : vertices) {
 			u.setD(INF);
 			u.setColor(Vertex.WHITE);
@@ -320,6 +324,7 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 			List<Vertex<T>> neigh = getNeighbors(u);
 			for (Vertex<T> v : neigh) {
 				if (v.getColor() == Vertex.WHITE && getEdgeWeight(u, v) < v.getD()) {
+					marked[getIndexOf(u)][getIndexOf(v)] = true;
 					queue.remove(v);
 					v.setD(getEdgeWeight(u, v));
 					queue.add(v);
@@ -329,7 +334,7 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 			u.setColor(Vertex.BLACK);
 		}
 	}
-
+	
 	public ArrayList<Edge<T>> kruskal() {
 		ArrayList<Edge<T>> result = new ArrayList<>();
 		int e = 0;
@@ -381,6 +386,14 @@ public class AdjMatrixGraph<T> implements IGraph<T> {
 			contents.add(vertices.get(i).getValue());
 		}
 		return contents;
+	}
+
+	public boolean[][] getMarked() {
+		return marked;
+	}
+
+	public void setMarked(boolean[][] marked) {
+		this.marked = marked;
 	}
 
 }

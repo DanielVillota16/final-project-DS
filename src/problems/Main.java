@@ -20,7 +20,7 @@ public class Main {
 		//miceAndMazeAdjListSolution();
 		//miceAndMazeAdjMatrixSolution();
 		//darkRoadsAdjListSolution();
-		darkRoadsAdjMatrixSolution();
+		//darkRoadsAdjMatrixSolution();
 	}
 	
 	public static void darkRoadsAdjListSolution() throws IOException {

@@ -23,7 +23,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 		this.directed = directed;
 		this.weighted = weighted;
 		numberOfVertices = 0;
-		numberOfEdges = getNumberOfEdges();
+		numberOfEdges = 0;
 		vertices = new LinkedList<Vertex<T>>();
 		map = new HashMap<>();
 	}
@@ -357,6 +357,7 @@ public class AdjListGraph<T> implements IGraph<T> {
 			for (Edge<T> e : u.getAdjList()) {
 				AdjVertex<T> v = (AdjVertex<T>) e.getDestination();
 				if (v.getColor() == Vertex.WHITE && e.getWeight() < v.getD()) {
+					e.setMarked(true);
 					queue.remove(v);
 					v.setD(e.getWeight());
 					queue.add(v);

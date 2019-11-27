@@ -9,8 +9,8 @@ import graphs.AdjListGraph;
 public class DarkRoads {
 
 	public static void main(String[] args) throws IOException {
-		//darkRoadsAdjList();
-		darkRoadsAdjMatrix();
+		darkRoadsAdjList();
+		//darkRoadsAdjMatrix();
 	}
 	
 	public static void darkRoadsAdjList() throws IOException {

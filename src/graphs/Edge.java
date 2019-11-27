@@ -6,6 +6,7 @@ public class Edge<T> implements Comparable<Edge<T>>{
 
 	private Vertex<T> source;
 	private Vertex<T> destination;
+	private boolean marked;
 
 	public Edge(Vertex<T> source, Vertex<T> destination) {
 		this(source, destination, 1D);
@@ -15,6 +16,7 @@ public class Edge<T> implements Comparable<Edge<T>>{
 		this.source = source;
 		this.destination = destination;
 		this.weight = weight;
+		this.marked = false;
 	}
 
 	public double getWeight() {
@@ -41,6 +43,14 @@ public class Edge<T> implements Comparable<Edge<T>>{
 	@Override
 	public String toString() {
 		return ""+source+" - "+destination+", "+weight;
+	}
+
+	public boolean isMarked() {
+		return marked;
+	}
+
+	public void setMarked(boolean marked) {
+		this.marked = marked;
 	}
 
 }

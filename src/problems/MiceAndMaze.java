@@ -10,7 +10,7 @@ import graphs.AdjMatrixGraph;
 public class MiceAndMaze {
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		//miceAndMazeAdjList();
+		miceAndMazeAdjList();
 		//miceAndMazeAdjMatrix();
 	}
 	
